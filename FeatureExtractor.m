@@ -66,15 +66,15 @@ classdef FeatureExtractor
             end
             
             %%%%%%%%%%%%%%%%%%   FREQ DOMAIN FEATURES %%%%%%%%%%%%%%%%%%%%%
-            X = fft(dataCalibrated,1024);
+            X = fft(dataCalibrated,512);
             X = X./max(X);
             X = fftshift(X);
             psd = abs(X);
-            kk = 0:1024-1;
-            F = kk/1024* obj.fs - obj.fs/2;
+            kk = 0:512-1;
+            F = kk/512* obj.fs - obj.fs/2;
             [~,index] = find(F==0);
-            F = F(index:1024);
-            psd = psd(index:1024,:);
+            F = F(index:512);
+            psd = psd(index:512,:);
             [rows,~] = size(psd);
             meanPSD = zeros(rows,1); 
             for j=1:rows

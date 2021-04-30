@@ -8,10 +8,11 @@ classdef Calibrator
             [rows,cols] = size(csiData);
             %First, it applies hampel filter to remove outliers from
             %csiData
-            csiHampel = hampel(csiData,round(rows/hampelWindowProp),2);
-            maf = zeros(size(csiHampel)); 
+            %csiHampel = hampel(csiData,round(rows/hampelWindowProp),2);
+            maf = zeros(size(csiData)); 
             for j = 1:cols %Se envia columna por columna
-                maf(:,j) = filtrarMediaMovil(csiHampel(:,j),round(rows/mavWindowProp)); 
+               % maf(:,j) = filtrarMediaMovil(csiHampel(:,j),round(rows/mavWindowProp)); 
+                maf(:,j) = sgolayfilt(csiData(:,j),3,101);
             end 
             if isempty(z)
                 [dataCalibrated,z] = filter(b,a,maf);
